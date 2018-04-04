@@ -187,7 +187,7 @@ class Server
 	chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>
 	{
 		chrome.tabs.connect( tabs[0].id,{name : this.PORT_NAME });
-	    chrome.tabs.sendMessage( tabs[0].id, messageObject, {},function(response)
+		chrome.tabs.sendMessage( tabs[0].id, messageObject, {},function(response)
 		{
 
 		});
@@ -210,7 +210,7 @@ class Server
 
 		chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>
 		{
-		    chrome.tabs.sendMessage(tabs[0].id, messageObject, {},function(response)
+			chrome.tabs.sendMessage(tabs[0].id, messageObject, {},function(response)
 			{
 
 			});
