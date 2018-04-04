@@ -72,7 +72,7 @@ class Client
 
 	}
 
-	executeOnBackgrond(name, request )
+	executeOnBackground(name, request )
 	{
 		var url =window.location.href;
 		if( this.serverPort === null )

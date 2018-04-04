@@ -77,7 +77,7 @@ class Server
 		this.reconnect();
 	}
 
-	executeOnClient(name, request )
+	executeOnClients(name, request )
 	{
 		this.sendMessage({ command: name, request: request });
 	}
