@@ -1,4 +1,4 @@
-class ExtensionFrameworkServer
+class Server
 {
 	constructor()
 	{
