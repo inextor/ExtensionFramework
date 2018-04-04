@@ -103,12 +103,10 @@ class Client
 		try
 		{
 			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST_TO_CLIENT', value:{ url:url ,name:name ,request: request} });
-			return Promise.resolve( 'hEllyeah' );
 		}
 		catch(e)
 		{
 			console.error('Error sending custom request',e);
-			return Promise.reject( e );
 		}
 	}
 
