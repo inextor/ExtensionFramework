@@ -71,7 +71,7 @@ class ExtensionFrameworkClient
 		}
 
 	}
-	
+
 	executeOnBackgrond(name, request )
 	{
 		var url =window.location.href;
