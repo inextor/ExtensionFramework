@@ -2,7 +2,7 @@ class Server
 {
 	constructor()
 	{
-		this.debug				= true;
+		this.debug				= false;
 		this.pageLoadListeners	= {};
 		this.PORT_SERVER_NAME	= 'PORT_SERVER_NAME';
 		this.PORT_CLIENT_NAME	= 'PORT_CLIENT_NAME';
@@ -10,13 +10,15 @@ class Server
 		this.messageListeners	= {};
 		this.customRequestListeners = {};
 
-		console.log("init",Date.now() );
+		if( this.debug )
+			console.log("init",Date.now() );
 
 		chrome.runtime.onConnect.addListener((port)=>
 		{
 			this.ports.push( port );
 
-			console.log('Open ports for '+port.name);
+			if( this.debug )
+				console.log('Open ports for '+port.name);
 
 			if( port.name !== this.PORT_SERVER_NAME)
 				return;
@@ -43,12 +45,15 @@ class Server
 				{
 					if( typeof this.customRequestListeners[ msg.value.name ] === "undefined" )
 					{
-						console.log( msg.value.name+' Is not defined in background ' );
+						if( this.debug )
+							console.log( msg.value.name+' Is not defined in background ' );
 						return;
 					}
 
 
-					console.log('Custom Request call msg=>',msg );
+					if( this.debug )
+						console.log('Custom Request call msg=>',msg );
+
 					if( typeof sendingPort.sender !== "undefined" && typeof sendingPort.sender.tab !== "undefined"  )
 					{
 						this.customRequestListeners[ msg.value.name ].call( this ,msg.value.url ,msg.value.request, sendingPort.sender.tab.id );
@@ -103,12 +108,14 @@ class Server
 
 			try
 			{
-				console.log('Posting to client');
+				if( this.debug )
+					console.log('Posting to client');
+
 				clientPort.postMessage({command: 'CONNECT' });
 			}
 			catch(exception)
 			{
-				console.log('An error occourred ',exception );
+				console.error('An error occourred ',exception );
 			}
 		});
 	}
@@ -127,7 +134,9 @@ class Server
 
 			if( regex.test( request.value.href ) )
 			{
-				console.log('YEad testing successfull');
+				if( this.debug )
+					console.log('Testing successfull');
+
 				this.pageLoadListeners[ i ].callback.call( null, request.value.href );
 
 				if( !this.pageLoadListeners[ i ].is_persistent )
@@ -135,7 +144,8 @@ class Server
 			}
 			else
 			{
-				console.log(request.value+' fails for '+i );
+				if( this.debug )
+					console.log(request.value+' fails for '+i );
 			}
 		}
 	}
