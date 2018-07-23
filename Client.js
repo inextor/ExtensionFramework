@@ -9,11 +9,8 @@ class Client
 
 		this.customFunctions = {};
 
-		console.log('Init');
-
 		chrome.runtime.onConnect.addListener((port)=>
 		{
-			console.log('COnnect please'+port.name );
 			if( port.name === this.PORT_CLIENT_NAME )
 			{
 				this.connect();
@@ -26,9 +23,6 @@ class Client
 
 	connect()
 	{
-		//Testing if the lamda works instead of the function
-		console.log('Connection maybe???');
-
 		var port = chrome.runtime.connect({name: this.PORT_SERVER_NAME });
 
 		port.onMessage.addListener((request)=>
@@ -43,7 +37,6 @@ class Client
 
 		try
 		{
-			console.log('Posting the message');
 			port.postMessage({ command : 'PAGE_LOADED', value: JSON.parse( JSON.stringify( window.location ) )});
 		}
 		catch(exception)
@@ -107,6 +100,14 @@ class Client
 		catch(e)
 		{
 			console.error('Error sending custom request',e);
+		}
+	}
+
+	log(...args)
+	{
+		if( this.debug )
+		{
+			console.log.apply( args );
 		}
 	}
 
