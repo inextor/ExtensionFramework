@@ -72,7 +72,9 @@ class Server
 			port.onDisconnect.addListener((port)=>
 			{
 				var index = this.ports.indexOf( port );
-				console.log('Removing port '+index);
+
+				if( this.debug )
+					console.log('Removing port '+index);
 
 				if( index+1 )
 					this.ports.splice( index, 1 );
@@ -192,39 +194,4 @@ class Server
 		this.pageLoadListeners[ value ] = { callback: callback , is_persistent : is_persistent };
 	}
 }
-/*
 
-	chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>
-	{
-		chrome.tabs.connect( tabs[0].id,{name : this.PORT_NAME });
-		chrome.tabs.sendMessage( tabs[0].id, messageObject, {},function(response)
-		{
-
-		});
-	});
-
-	chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>
-	{
-		if( this.debug )
-			console.log( 'Requesting', request.command );
-
-		//sendResponse({ result : "success" });
-		return false;
-	});
-
-	chrome.runtime.sendMessage(null,{command: "PAGE_LOADED" , value: window.location.href }, {});
-
-	sendMessage( messageObject )
-	{
-		var current = this;
-
-		chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>
-		{
-			chrome.tabs.sendMessage(tabs[0].id, messageObject, {},function(response)
-			{
-
-			});
-		});
-
-	}
-*/
