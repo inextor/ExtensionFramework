@@ -98,18 +98,18 @@ class Server
 	{
 		chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>
 		{
-			var clientPort = chrome.tabs.connect( tabs[0].id,{name : this.PORT_CLIENT_NAME});
-
-			clientPort.onMessage.addListener((request)=>
-			{
-				if( request.command === 'PAGE_LOADED')
-				{
-					this.onPageLoaded( request );
-				}
-			});
-
 			try
 			{
+				var clientPort = chrome.tabs.connect( tabs[0].id,{name : this.PORT_CLIENT_NAME});
+
+				clientPort.onMessage.addListener((request)=>
+				{
+					if( request.command === 'PAGE_LOADED')
+					{
+						this.onPageLoaded( request );
+					}
+				});
+
 				if( this.debug )
 					console.log('Posting to client');
 
