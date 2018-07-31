@@ -115,4 +115,37 @@ class Client
 	{
 		this.customFunctions[ name ] = func;
 	}
+
+	waitTillReady( selector, isArray  )
+    {
+        return new Promise((resolve,reject)=>
+        {
+            var interval_id = -1;
+
+            if( this.isReadySelector( selector , isArray ) )
+            {
+                resolve( true );
+                return;
+            }
+
+            interval_id = setInterval(()=>
+            {
+                if( this.isReadySelector( selector, isArray ) )
+                {
+                    resolve( true );
+                    clearInterval( interval_id );
+                    return;
+                }
+            },300);
+        });
+    }
+
+	isReadySelector( selector, isArray )
+    {
+        var obj = isArray
+            ? document.querySelectorAll( selector )
+            : document.querySelector( selector );
+
+        return isArray ? obj !== null && obj.length > 0 : obj !== null;
+    }
 }
