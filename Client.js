@@ -148,4 +148,37 @@ class Client
 
         return isArray ? obj !== null && obj.length > 0 : obj !== null;
     }
+
+	isReadyElementSelector(element, selector, isArray )
+    {
+        var obj = isArray
+            ? element.querySelectorAll( selector )
+            : element.querySelector( selector );
+
+        return isArray ? obj !== null && obj.length > 0 : obj !== null;
+    }
+
+	waitTillElementReady(element, selector, isArray  )
+    {
+        return new Promise((resolve,reject)=>
+        {
+            var interval_id = -1;
+
+            if( this.isReadyElementSelector( selector , isArray ) )
+            {
+                resolve( true );
+                return;
+            }
+
+            interval_id = setInterval(()=>
+            {
+                if( this.isReadyElementSelector( selector, isArray ) )
+                {
+                    resolve( true );
+                    clearInterval( interval_id );
+                    return;
+                }
+            },300);
+        });
+    }
 }
