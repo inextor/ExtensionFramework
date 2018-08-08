@@ -23,7 +23,7 @@ class Client
 
 	connect()
 	{
-		var port = chrome.runtime.connect({name: this.PORT_SERVER_NAME });
+		let port = chrome.runtime.connect({name: this.PORT_SERVER_NAME });
 
 		port.onMessage.addListener((request)=>
 		{
@@ -47,7 +47,7 @@ class Client
 
 	closeThisTab()
 	{
-		var url =window.location.href;
+		let url =window.location.href;
 		if( this.serverPort === null )
 		{
 			console.error('Server Port is closed');
@@ -67,7 +67,7 @@ class Client
 
 	executeOnBackground(name, request )
 	{
-		var url =window.location.href;
+		let url =window.location.href;
 		if( this.serverPort === null )
 		{
 			console.error('Server Port is closed');
@@ -85,7 +85,7 @@ class Client
 
 	executeOnClients(name, request )
 	{
-		var url =window.location.href;
+		let url =window.location.href;
 
 		if( this.serverPort === null )
 		{
@@ -120,7 +120,7 @@ class Client
     {
         return new Promise((resolve,reject)=>
         {
-            var interval_id = -1;
+            let interval_id = -1;
 
             if( this.isReadySelector( selector , isArray ) )
             {
@@ -142,7 +142,7 @@ class Client
 
 	isReadySelector( selector, isArray )
     {
-        var obj = isArray
+        let obj = isArray
             ? document.querySelectorAll( selector )
             : document.querySelector( selector );
 
@@ -151,7 +151,7 @@ class Client
 
 	isReadyElementSelector(element, selector, isArray )
     {
-        var obj = isArray
+        let obj = isArray
             ? element.querySelectorAll( selector )
             : element.querySelector( selector );
 
@@ -162,9 +162,9 @@ class Client
     {
         return new Promise((resolve,reject)=>
         {
-            var interval_id = -1;
+            let interval_id = -1;
 
-            if( this.isReadyElementSelector( selector , isArray ) )
+            if( this.isReadyElementSelector( element ,selector ,isArray ) )
             {
                 resolve( true );
                 return;
@@ -172,7 +172,7 @@ class Client
 
             interval_id = setInterval(()=>
             {
-                if( this.isReadyElementSelector( selector, isArray ) )
+                if( this.isReadyElementSelector( element ,selector ,isArray ) )
                 {
                     resolve( true );
                     clearInterval( interval_id );
