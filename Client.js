@@ -103,11 +103,12 @@ class Client
 		}
 	}
 
-	log(...args)
+	log()
 	{
 		if( this.debug )
 		{
-			console.log.apply( args );
+			let args = Array.from( arguments );
+            console.log.apply( console, args );
 		}
 	}
 
