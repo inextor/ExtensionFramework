@@ -164,7 +164,6 @@ class Server
 
 		this.messageListeners[ msg.id ] = (msg)=>
 		{
-			resolve( msg.response );
 		};
 
 		try
@@ -176,11 +175,10 @@ class Server
 					i.postMessage( msg );
 				});
 
-				resolve( msg );
 			}
 			else
 			{
-				reject('No open ports(tabs) are open');
+				console.log("no ports Open");
 			}
 		}
 		catch(exception)
