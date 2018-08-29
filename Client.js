@@ -5,7 +5,7 @@ class Client
 		this.debug				= false;
 		this.PORT_SERVER_NAME 	= 'PORT_SERVER_NAME';
 		this.PORT_CLIENT_NAME 	= 'PORT_CLIENT_NAME';
-		this.severPort			= null;
+		this.serverPort			= null;
 
 		this.customFunctions = {};
 
