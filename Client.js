@@ -117,7 +117,30 @@ class Client
 		this.customFunctions[ name ] = func;
 	}
 
-	waitTillReady( selector, isArray  )
+
+	waitTillNotRedy( selector, isArray )
+	{
+		return new Promise((resolve,reject)=>
+		{
+			let interval_id = -1;
+			if( !this.isReadySelector( selector, isArray ) )
+			{
+				resolve( true );
+				return;
+			}
+
+			interval_id = setInterval(()=>
+			{
+				if( !this.isReadySelector( selector, isArray ) )
+				{
+					clearInterval( interval_id );
+					resolve( true );
+				}
+			},300 );
+		});
+	}
+
+	waitTillReady( selector, isArray )
     {
         return new Promise((resolve,reject)=>
         {
@@ -133,8 +156,8 @@ class Client
             {
                 if( this.isReadySelector( selector, isArray ) )
                 {
-                    resolve( true );
                     clearInterval( interval_id );
+                    resolve( true );
                     return;
                 }
             },300);
