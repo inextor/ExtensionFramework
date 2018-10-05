@@ -83,9 +83,9 @@ class Server
 		this.reconnect();
 	}
 
-	executeOnClients(name, request )
+	executeOnClients(name, request, port )
 	{
-		this.sendMessage({ command: name, request: request });
+		this.sendMessage({ command: name, request: request }, port );
 	}
 
 	addListener(name,callback)
