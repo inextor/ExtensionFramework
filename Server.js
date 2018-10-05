@@ -50,17 +50,16 @@ class Server
 						return;
 					}
 
-
 					if( this.debug )
 						console.log('Custom Request call msg=>',msg );
 
 					if( typeof sendingPort.sender !== "undefined" && typeof sendingPort.sender.tab !== "undefined"  )
 					{
-						this.customRequestListeners[ msg.value.name ].call( this ,msg.value.url ,msg.value.request, sendingPort.sender.tab.id );
+						this.customRequestListeners[ msg.value.name ].call( this ,msg.value.url ,msg.value.request, sendingPort.sender.tab.id, port );
 					}
 					else
 					{
-						this.customRequestListeners[ msg.value.name ].call( this ,msg.value.url ,msg.value.request, null );
+						this.customRequestListeners[ msg.value.name ].call( this ,msg.value.url ,msg.value.request, null, port );
 					}
 				}
 				else if( msg.command == "CUSTOM_REQUEST_TO_CLIENT" )
@@ -152,7 +151,7 @@ class Server
 		}
 	}
 
-	sendMessage( request )
+	sendMessage( request, port )
 	{
 		if( this.ports.length === 0 )
 		{
