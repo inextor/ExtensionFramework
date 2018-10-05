@@ -167,17 +167,23 @@ class Server
 
 		try
 		{
-			if( this.ports.length )
+			if( port )
 			{
-				this.ports.forEach((i)=>
-				{
-					i.postMessage( msg );
-				});
-
+				port.postMessage( msg );
 			}
 			else
 			{
-				console.log("no ports Open");
+				if( this.ports.length )
+				{
+					this.ports.forEach((i)=>
+					{
+						i.postMessage( msg );
+					});
+				}
+				else
+				{
+					console.log("no ports Open");
+				}
 			}
 		}
 		catch(exception)
