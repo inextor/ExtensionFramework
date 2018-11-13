@@ -85,7 +85,7 @@ class Server
 
 	getPortForTabId( tabId )
 	{
-		return this.ports.find(( p =>{
+		return this.ports.find(( p )=>{
 			if( 'sender' in p )
 			{
 				return p.sender.tab.id === tabId;
