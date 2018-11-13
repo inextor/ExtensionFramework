@@ -83,6 +83,17 @@ class Server
 		this.reconnect();
 	}
 
+	getPortForTabId( tabId )
+	{
+		return this.ports.find(( p =>{
+			if( 'sender' in p )
+			{
+				return p.sender.tab.id === tabId;
+			}
+			return false;
+		});
+	}
+
 	executeOnClients(name, request, port )
 	{
 		this.sendMessage({ command: name, request: request }, port );
