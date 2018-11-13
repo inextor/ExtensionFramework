@@ -64,7 +64,7 @@ class Server
 				}
 				else if( msg.command == "CUSTOM_REQUEST_TO_CLIENT" )
 				{
-					this.sendMessage({ command : msg.value.name , request: msg.value.request });
+					this.sendMessage({ command : msg.value.name , request: msg.value.request }, null );
 				}
 			});
 
