@@ -102,6 +102,28 @@ class Client
 			console.error('Error sending custom request',e);
 		}
 	}
+	executeOnCurrentTab(name, request )
+	{
+		let url =window.location.href;
+
+		if( this.serverPort === null )
+		{
+			console.error('Server Port is closed');
+			return;
+		}
+
+		try
+		{
+			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST_TO_CURRENT_TAB', value:{ url:url ,name:name ,request: request} });
+		}
+		catch(e)
+		{
+			console.error('Error sending custom request',e);
+		}
+	}
+
+
+
 
 	log()
 	{

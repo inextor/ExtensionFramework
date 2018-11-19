@@ -66,6 +66,14 @@ class Server
 				{
 					this.sendMessage({ command : msg.value.name , request: msg.value.request }, null );
 				}
+				else if( msg.command == "CUSTOM_REQUEST_TO_CURRENT_TAB" )
+				{
+					chrome.tabs.query({ currentWindow: true ,active : true },( tabArray )=>
+        			{
+						let clientPort = this.getPortForTabId( tabArray[0].id );
+        			    this.executeOnClients( msg.value.name ,request ,clientPort );
+        			});
+				}
 			});
 
 			port.onDisconnect.addListener((port)=>
