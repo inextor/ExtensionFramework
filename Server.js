@@ -71,7 +71,7 @@ class Server
 					chrome.tabs.query({ currentWindow: true ,active : true },( tabArray )=>
         			{
 						let clientPort = this.getPortForTabId( tabArray[0].id );
-        			    this.executeOnClients( msg.value.name ,request ,clientPort );
+        			    this.executeOnClients( msg.value.name ,msg.value.request ,clientPort );
         			});
 				}
 			});
