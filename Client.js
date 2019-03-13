@@ -1,4 +1,4 @@
-class Client
+export default class Client
 {
 	constructor()
 	{
@@ -75,7 +75,9 @@ class Client
 		}
 		try
 		{
-			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST', value:{ url:url ,name:name ,request: request} });
+			chrome.windows.getCurrent({},(win)=>{
+				this.serverPort.postMessage({ command : 'CUSTOM_REQUEST', value:{ url:url ,name:name ,request: request, window_id: win.id }});
+			});
 		}
 		catch(e)
 		{
@@ -95,7 +97,9 @@ class Client
 
 		try
 		{
-			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST_TO_CLIENT', value:{ url:url ,name:name ,request: request} });
+			chrome.windows.getCurrent({},(win)=>{
+				this.serverPort.postMessage({ command : 'CUSTOM_REQUEST_TO_CLIENT', value:{ url:url ,name:name ,request: request, window_id: win.id } });
+			});
 		}
 		catch(e)
 		{
@@ -114,7 +118,12 @@ class Client
 
 		try
 		{
-			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST_TO_CURRENT_TAB', value:{ url:url ,name:name ,request: request} });
+
+			chrome.windows.getCurrent({}, (window_info)=>
+			{
+            	chrome.runtime.sendMessage( default_settings.tab_extension_id ,{ open: links, window_id: window_info.id  }, (response)=> { console.log( response);});
+			});
+
 		}
 		catch(e)
 		{
