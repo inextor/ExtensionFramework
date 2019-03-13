@@ -1,0 +1,23 @@
+{
+  "name": "extension-framework",
+  "version": "2.0.2",
+  "description": "TO develop Web Extensions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inextor/ExtensionFramework.git"
+  },
+  "keywords": [
+    "web",
+    "extensions",
+    "utils"
+  ],
+  "author": "nextor <nextor@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inextor/ExtensionFramework/issues"
+  },
+  "homepage": "https://github.com/inextor/ExtensionFramework#readme",
+  "dependencies": {
+    "npm": "^6.4.1"
+  }
+}
