@@ -197,18 +197,14 @@ export default class Client
 
 	isReadySelector( selector, isArray )
     {
-        let obj = isArray
-            ? document.querySelectorAll( selector )
-            : document.querySelector( selector );
+        let obj = isArray ? document.querySelectorAll( selector ) : document.querySelector( selector );
 
         return isArray ? obj !== null && obj.length > 0 : obj !== null;
     }
 
 	isReadyElementSelector(element, selector, isArray )
     {
-        let obj = isArray
-            ? element.querySelectorAll( selector )
-            : element.querySelector( selector );
+        let obj = isArray ? element.querySelectorAll( selector ) : element.querySelector( selector );
 
         return isArray ? obj !== null && obj.length > 0 : obj !== null;
     }
@@ -236,4 +232,40 @@ export default class Client
             },300);
         });
     }
+	waitTillReadyText( selector, text, ignoreCase )
+	{
+		let ignore = ignoreCase === undefined ? true : ignoreCase;
+
+		return new Promise((resolve,reject)=>
+        {
+			check = ()=>{
+
+				let doms = document.querySelectorAll( selector );
+
+				for(let entry of doms.entries())
+				{
+					let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
+
+					if( ignoreCase )
+						if( txt.toLowerCase() === text )
+							return true;
+					else if( domtxt === text )
+						return true;
+				}
+
+
+				return false;
+			};
+
+            interval_id = setInterval(()=>
+            {
+				if( check() )
+                {
+                    resolve( true );
+                    clearInterval( interval_id );
+                    return;
+                }
+            },400);
+        });
+	}
 }
