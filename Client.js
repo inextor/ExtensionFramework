@@ -232,7 +232,7 @@ export default class Client
             },300);
         });
     }
-	waitTillReadyText( selector, text, ignoreCase )
+	waitTillTextReady( selector, text, ignoreCase )
 	{
 		let ignore = ignoreCase === undefined ? true : ignoreCase;
 
