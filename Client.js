@@ -121,7 +121,7 @@ export default class Client
 
 			chrome.windows.getCurrent({}, (window_info)=>
 			{
-            	chrome.runtime.sendMessage( default_settings.tab_extension_id ,{ open: links, window_id: window_info.id  }, (response)=> { console.log( response);});
+				chrome.runtime.sendMessage( default_settings.tab_extension_id ,{ open: links, window_id: window_info.id  }, (response)=> { console.log( response);});
 			});
 
 		}
@@ -139,7 +139,7 @@ export default class Client
 		if( this.debug )
 		{
 			let args = Array.from( arguments );
-            console.log.apply( console, args );
+			console.log.apply( console, args );
 		}
 	}
 
@@ -172,72 +172,72 @@ export default class Client
 	}
 
 	waitTillReady( selector, isArray )
-    {
-        return new Promise((resolve,reject)=>
-        {
-            let interval_id = -1;
+	{
+		return new Promise((resolve,reject)=>
+		{
+			let interval_id = -1;
 
-            if( this.isReadySelector( selector , isArray ) )
-            {
-                resolve( true );
-                return;
-            }
+			if( this.isReadySelector( selector , isArray ) )
+			{
+				resolve( true );
+				return;
+			}
 
-            interval_id = setInterval(()=>
-            {
-                if( this.isReadySelector( selector, isArray ) )
-                {
-                    clearInterval( interval_id );
-                    resolve( true );
-                    return;
-                }
-            },300);
-        });
-    }
+			interval_id = setInterval(()=>
+			{
+				if( this.isReadySelector( selector, isArray ) )
+				{
+					clearInterval( interval_id );
+					resolve( true );
+					return;
+				}
+			},300);
+		});
+	}
 
 	isReadySelector( selector, isArray )
-    {
-        let obj = isArray ? document.querySelectorAll( selector ) : document.querySelector( selector );
+	{
+		let obj = isArray ? document.querySelectorAll( selector ) : document.querySelector( selector );
 
-        return isArray ? obj !== null && obj.length > 0 : obj !== null;
-    }
+		return isArray ? obj !== null && obj.length > 0 : obj !== null;
+	}
 
 	isReadyElementSelector(element, selector, isArray )
-    {
-        let obj = isArray ? element.querySelectorAll( selector ) : element.querySelector( selector );
+	{
+		let obj = isArray ? element.querySelectorAll( selector ) : element.querySelector( selector );
 
-        return isArray ? obj !== null && obj.length > 0 : obj !== null;
-    }
+		return isArray ? obj !== null && obj.length > 0 : obj !== null;
+	}
 
 	waitTillElementReady(element, selector, isArray  )
-    {
-        return new Promise((resolve,reject)=>
-        {
-            let interval_id = -1;
+	{
+		return new Promise((resolve,reject)=>
+		{
+			let interval_id = -1;
 
-            if( this.isReadyElementSelector( element ,selector ,isArray ) )
-            {
-                resolve( true );
-                return;
-            }
+			if( this.isReadyElementSelector( element ,selector ,isArray ) )
+			{
+				resolve( true );
+				return;
+			}
 
-            interval_id = setInterval(()=>
-            {
-                if( this.isReadyElementSelector( element ,selector ,isArray ) )
-                {
-                    resolve( true );
-                    clearInterval( interval_id );
-                    return;
-                }
-            },300);
-        });
-    }
+			interval_id = setInterval(()=>
+			{
+				if( this.isReadyElementSelector( element ,selector ,isArray ) )
+				{
+					resolve( true );
+					clearInterval( interval_id );
+					return;
+				}
+			},300);
+		});
+	}
 	waitTillTextReady( selector, text, ignoreCase )
 	{
 		let ignore = ignoreCase === undefined ? true : ignoreCase;
 
 		return new Promise((resolve,reject)=>
-        {
+		{
 			check = ()=>{
 
 				let doms = document.querySelectorAll( selector );
@@ -247,25 +247,29 @@ export default class Client
 					let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
 
 					if( ignoreCase )
+					{
 						if( txt.toLowerCase() === text )
+						{
 							return true;
+						}
+					}
 					else if( domtxt === text )
+					{
 						return true;
+					}
 				}
-
 
 				return false;
 			};
 
-            interval_id = setInterval(()=>
-            {
+			interval_id = setInterval(()=>
+			{
 				if( check() )
-                {
-                    resolve( true );
-                    clearInterval( interval_id );
-                    return;
-                }
-            },400);
-        });
+				{
+					clearInterval( interval_id );
+					resolve( true );
+				}
+			},400);
+		});
 	}
 }
