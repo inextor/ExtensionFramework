@@ -232,6 +232,28 @@ export default class Client
 			},300);
 		});
 	}
+
+	getElementWithText(selector, text, ignoreCase )
+	{
+		let doms = document.querySelector( selector );
+		for( let entry of doms.entries() )
+		{
+			let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
+			if( ignoreCase )
+			{
+				if( txt.toLowerCase() === text )
+				{
+					return entry;
+				}
+			}
+			else if( domtxt === text )
+			{
+				return entry;
+			}
+		}
+		return null;
+	}
+
 	waitTillTextReady( selector, text, ignoreCase )
 	{
 		let ignore = ignoreCase === undefined ? true : ignoreCase;
@@ -239,27 +261,8 @@ export default class Client
 		return new Promise((resolve,reject)=>
 		{
 			check = ()=>{
-
-				let doms = document.querySelectorAll( selector );
-
-				for(let entry of doms.entries())
-				{
-					let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
-
-					if( ignoreCase )
-					{
-						if( txt.toLowerCase() === text )
-						{
-							return true;
-						}
-					}
-					else if( domtxt === text )
-					{
-						return true;
-					}
-				}
-
-				return false;
+				let ele = this.getElementWithText( selector, text, ignoreCase );
+				return ele === null ? false : true;
 			};
 
 			interval_id = setInterval(()=>
