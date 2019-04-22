@@ -75,9 +75,7 @@ export default class Client
 		}
 		try
 		{
-			chrome.windows.getCurrent({},(win)=>{
-				this.serverPort.postMessage({ command : 'CUSTOM_REQUEST', value:{ url:url ,name:name ,request: request, window_id: win.id }});
-			});
+			this.serverPort.postMessage({ command : 'CUSTOM_REQUEST', value:{ url:url ,name:name ,request: request }});
 		}
 		catch(e)
 		{
