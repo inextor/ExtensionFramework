@@ -233,23 +233,18 @@ export default class Client
 
 	getElementWithText(selector, text, ignoreCase )
 	{
-		let doms = document.querySelector( selector );
-		for( let entry of doms.entries() )
+		let doms = document.querySelectorAll( selector );
+		let darray = Array.from( doms );
+
+		return darray.find((entry)=>
 		{
 			let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
 			if( ignoreCase )
 			{
-				if( txt.toLowerCase() === text )
-				{
-					return entry;
-				}
+				return domtxt.toLowerCase() === text;
 			}
-			else if( domtxt === text )
-			{
-				return entry;
-			}
-		}
-		return null;
+			return domtxt === text;
+		});
 	}
 
 	waitTillTextReady( selector, text, ignoreCase )
@@ -260,8 +255,10 @@ export default class Client
 		{
 			let check = ()=>{
 				let ele = this.getElementWithText( selector, text, ignoreCase );
-				return ele === null ? false : true;
+				return ele === undefined ? false : true;
 			};
+
+			let interval_id = 0;
 
 			interval_id = setInterval(()=>
 			{
