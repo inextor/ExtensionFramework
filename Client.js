@@ -258,7 +258,7 @@ export default class Client
 
 		return new Promise((resolve,reject)=>
 		{
-			check = ()=>{
+			let check = ()=>{
 				let ele = this.getElementWithText( selector, text, ignoreCase );
 				return ele === null ? false : true;
 			};
