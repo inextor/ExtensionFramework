@@ -241,7 +241,7 @@ export default class Client
 			let domtxt = entry.textContent.replace(/\s+/g,' ').trim();
 			if( ignoreCase )
 			{
-				return domtxt.toLowerCase() === text;
+				return domtxt.toLowerCase() === text.toLowerCase();
 			}
 			return domtxt === text;
 		});
